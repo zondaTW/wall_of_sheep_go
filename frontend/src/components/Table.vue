@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     initWS: function() {
-      this.ws = new WebSocket("ws://localhost:3000/ws")
+      this.ws = new WebSocket("ws://" + window.location.hostname + ":3000/ws")
       this.ws.onmessage = this.onMessage
       this.ws.onclose = this.onClose
     },
