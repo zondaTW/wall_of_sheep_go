@@ -63,8 +63,8 @@ func (sn *Sniffer) StartCapture() {
 			dstPort := int(protocolStruct.DstPort)
 			portType := portNames[protocolStruct.DstPort]
 
-			if Filter(dstPort, portType, protocolStruct.BaseLayer.Payload) {
-				sn.Transporter(dstIP, protocol, dstPort, portType, protocolStruct.BaseLayer.Payload)
+			if extraData, retBool := Filter(dstPort, portType, protocolStruct.BaseLayer.Payload); retBool != false {
+				sn.Transporter(dstIP, protocol, dstPort, portType, extraData)
 			}
 		}
 	}

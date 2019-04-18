@@ -1,22 +1,38 @@
 package sniffer
 
-type transporter func(string, string, int, string, []byte)
+import (
+	"encoding/json"
+	"strconv"
+)
+
+type transporter func(string, string, int, string, interface{})
 type transportFunc func(interface{})
 type TransportInfo struct {
 	IP       string
 	Protocol string
-	Port     int
+	Port     string
 	Type     string
 }
 
 func Transporter(fn transportFunc) transporter {
-	return func(dstIP string, protocol string, dstPort int, portType string, payload []byte) {
+	return func(dstIP string, protocol string, dstPort int, portType string, extraData interface{}) {
 		transportInfo := &TransportInfo{
 			IP:       dstIP,
 			Protocol: protocol,
-			Port:     dstPort,
+			Port:     strconv.Itoa(dstPort),
 			Type:     portType,
 		}
-		fn(transportInfo)
+
+		var mergeData map[string]string
+
+		jsonTransportInfo, _ := json.Marshal(transportInfo)
+		json.Unmarshal(jsonTransportInfo, &mergeData)
+
+		if extraData != nil {
+			jsonExtraData, _ := json.Marshal(extraData)
+			json.Unmarshal(jsonExtraData, &mergeData)
+		}
+
+		fn(mergeData)
 	}
 }

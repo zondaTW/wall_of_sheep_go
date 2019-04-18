@@ -9,7 +9,7 @@ export default {
   name: 'Table',
   data () {
     return {
-      fields: ['IP', 'Protocol', 'Port', 'Type'],
+      fields: ['IP', 'Protocol', 'Port', 'Type', 'Method', 'User', 'Password'],
       tableData: [
       ],
       ws: null,
