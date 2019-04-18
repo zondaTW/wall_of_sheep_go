@@ -1,3 +1,15 @@
 # Wall of Sheep
 
-尚未完成
+## Backend
+
+`go build`  
+`main.exe`  
+
+## Frontend
+
+`npm build`  
+`http-server dist`  
+
+## Demo
+
+![picture](picture/wall_of_sheep.PNG)
